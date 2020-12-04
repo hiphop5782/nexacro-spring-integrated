@@ -37,16 +37,16 @@
 	<!-- 
 		NexacroFileView 등록
 	 -->
-	<beans:bean id="nexacroFileVIew" class="com.nexacro.uiadapter17.spring.core.view.NexacroFileView"></beans:bean>
+	<beans:bean id="nexacroFileView" class="com.nexacro.uiadapter17.spring.core.view.NexacroFileView"></beans:bean>
 	
 	<!-- 
 		NexacroView 등록
 		데이터 전송시 사용되는 기본 ContentType을 설정한다.
      
-     	공식 문서의 설명에 의하면 defaultContentType에 다음 설정이 가능하다.
-     	PlatformType#CONTENT_TYPE_XML
-     	PlatformType#CONTENT_TYPE_SSV
-     	PlatformType#CONTENT_TYPE_BIN
+		공식 문서의 설명에 의하면 defaultContentType에 다음 설정이 가능하다.
+		PlatformType#CONTENT_TYPE_XML
+		PlatformType#CONTENT_TYPE_SSV
+		PlatformType#CONTENT_TYPE_BIN
 	 -->
 	<beans:bean id="nexacroView" class="com.nexacro.uiadapter17.spring.core.view.NexacroView">
 		<beans:property name="defaultContentType" value="PlatformXml"></beans:property>
