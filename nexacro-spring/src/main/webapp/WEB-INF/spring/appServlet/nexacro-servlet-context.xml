@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 
+		nexacro의 요청을 처리하기 위해 DispatherServlet이 알아야 할 설정들을 등록한다
+		- NexacroInterceptor : nexacro platform으로부터 데이터를 수신받아 PlatformData로 변환하는 작업을 수행
+		- NexacroFileView : nexacro platform으로 파일 전달 수행
+		- NexacroView : nexacro platform으로 데이터 전달 수행
+		- NexacroMethodArgumentResolver : PlatformData를 Java Bean으로 변환하는 작업을 수행
+		- NexacroHandlerMethodReturnValueHandler : 응답 데이터를 PlatformData로 변환하는 작업을 수행  
+		- NexacroMappingExceptionResolver : nexacro platform 통신 규약에 맞는 오류 처리를 수행
+		
+		XENI를 이용한 엑셀 연동 하려면 다음 설정이 추가로 필요하다(Apache POI 기반)
+		- GridExportImportServlet
+		- CommonsMultipartResolver
+	 -->
+	
+	
+	<!-- 
+		nexacro의 deploy 경로 접속이 가능하도록 설정한다.
+		- http://localhost:8080/nexacrospring/nxcr/**을 /webapp/deploy/로 연결한다.
+		- 웹에만 연동할 경우 /deploy/_web_/으로 설정하면 주소가 간편해진다.
+	 -->
+	<resources location="/deploy/" mapping="/nxcr/**"></resources>
+	
+	<!-- 
+		NexacroInterceptor 등록
+	 -->
+	<beans:bean id="nexacroInterceptor" class="com.nexacro.uiadapter17.spring.core.servlet.NexacroInterceptor"></beans:bean>
+	
+	<!-- 
+		NexacroFileView 등록
+	 -->
+	<beans:bean id="nexacroFileVIew" class="com.nexacro.uiadapter17.spring.core.view.NexacroFileView"></beans:bean>
+	
+	<!-- 
+		NexacroView 등록
+		데이터 전송시 사용되는 기본 ContentType을 설정한다.
+     
+     	공식 문서의 설명에 의하면 defaultContentType에 다음 설정이 가능하다.
+     	PlatformType#CONTENT_TYPE_XML
+     	PlatformType#CONTENT_TYPE_SSV
+     	PlatformType#CONTENT_TYPE_BIN
+	 -->
+	<beans:bean id="nexacroVIew" class="com.nexacro.uiadapter17.spring.core.view.NexacroView">
+		<beans:property name="defaultContentType" value="PlatformXml"></beans:property>
+		<beans:property name="defaultCharset" value="UTF-8"></beans:property>
+	</beans:bean>
+	
+	<!-- 
+		NexacroMappingExceptionResolver 등록
+		- 기본으로 제공되는 메세지를 사용할 수도 있고 직접 커스텀 메세지를 줄 수도 있다.
+		- 기본 메세지 유형을 사용하려면 shouldSendStackTrace=false로 설정 후 defaultErrorMsg의 value에 직접 메세지를 작성한다.
+	 -->
+	<beans:bean id="exceptionResolver" class="com.nexacro.uiadapter17.spring.core.resolve.NexacroMappingExceptionResolver">
+		<beans:property name="view" ref="nexacroView"></beans:property>
+		<beans:property name="shouldLogStackTrace" value="true"></beans:property>
+		<beans:property name="shouldSendStackTrace" value="true"></beans:property>
+		<beans:property name="defaultErrorMsg" value="fail.common.msg"></beans:property>
+		<beans:property name="messageSource" ref="messageSource"></beans:property>
+	</beans:bean>
+	
+	<!-- 
+		(중요) mvc:annotation-driven 설정 수정
+		- servlet-context.xml에 mvc:annotation-driven 설정이 있다면 제거한다.
+		- spring request와 nexacro request를 같이 사용하기 위하여 mvc:annotation-driven에 옵션을 부여한다.
+		
+		설정 클래스
+		- NexacroMethodArgumentResolver : PlatformData를 Java Bean으로 변환하는 작업을 수행
+		- NexacroHandlerMethodReturnValueHandler : 응답 데이터를 PlatformData로 변환하는 작업을 수행(nexacroView, nexacroFileView 주입)
+	 -->
+	 <annotation-driven>
+	 	<argument-resolvers>
+	 		<beans:bean class="com.nexacro.uiadapter17.spring.core.resolve.NexacroMethodArgumentResolver"></beans:bean>
+	 	</argument-resolvers>
+	 	<return-value-handlers>
+	 		<beans:bean class="com.nexacro.uiadapter17.spring.core.resolve.NexacroHandlerMethodReturnValueHandler">
+	 			<beans:property name="view" ref="nexacroView"></beans:property>
+	 			<beans:property name="fileView" ref="nexacroFileView"></beans:property>
+	 		</beans:bean>
+	 	</return-value-handlers>
+	 </annotation-driven>
+	
+</beans:beans>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 
+		nexacro uiadapter17의 ApplicationContextProvider 등록
+		- applicationContextProvider는 등록된 Spring Bean을 원하는 곳에서 사용할 수 있도록 ApplicationContext 객체를 제공한다.
+		- id 설정 시 applicationContextProvider로 등록한다.
+		- lazy-init 설정이 true가 되지 않도록 주의한다(기본값 false)
+	 -->
+	<bean id="applicationContextProvider" class="com.nexacro.uiadapter17.spring.core.context.ApplicationContextProvider"></bean>
+		
+</beans>
