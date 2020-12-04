@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!-- 프로젝트 정보 설정 -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.hacademy</groupId>
+	<artifactId>nexacrospring</artifactId>
+	<name>nexacro-spring</name>
+	<packaging>war</packaging>
+	<version>1.0.0-BUILD-SNAPSHOT</version>
+
+	<!-- 버전 관리용 변수 -->
+	<properties>
+		<java-version>1.8</java-version>
+		<org.springframework-version>5.2.9.RELEASE</org.springframework-version>
+		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<org.slf4j-version>1.7.30</org.slf4j-version>
+		
+		<!-- nexacro17 uiadapter version 설정 -->
+		<nexacro.uiadapter.version>1.0.0-SNAPSHOT</nexacro.uiadapter.version>
+	</properties>
+	
+	<!--
+		넥사크로 의존성 다운로드를 위한 저장소(Repository) 추가
+	 -->
+	<repositories>
+		<repository>
+			<id>tobesoft</id>
+			<name>tobesoft-nexacro</name>
+			<url>http://mangosteen.tobesoft.co.kr/nexus/repository/maven-public</url>
+		</repository>
+	</repositories>
+
+	<!-- 의존성 관리 영역 -->
+	<dependencies>
+		
+		<!-- Spring 의존성 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- Utill -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 스프링에서 단위테스트를 수행하기 위한 의존성 - junit : 단위 테스트 프레임워크 (4.9이상) - spring-test 
+			: 스프링에서 junit을 사용하기 위한 도구 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 데이터베이스 - ojdbc8.jar : 오라클을 사용하기 위해 필요한 의존성 - spring-jdbc : Spring에서 
+			JDBC를 도와주는 도구(버전 통일) - mybatis : 마이바티스 프레임워크(ORM) - mybatis-spring : 스프링을 
+			위한 마이바티스 어댑터 -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>19.7.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.5.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>2.0.5</version>
+		</dependency>
+
+		<!-- DBCP(Database Connection Pool) 의존성 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+
+		<!-- 파일 업로드 의존성 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- 스프링 트랜잭션 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- 스프링 시큐리티 도구(암호화) -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.4.1</version>
+		</dependency>
+		
+		<!-- 
+			넥사크로 uiadapter17 의존성 추가
+			- com.nexacro.uiadapter17.spring.uiadapter17-spring-core
+			- com.nexacro.uiadapter17.spring.uiadapter-spring-dataaccess
+			- com.nexacro.uiadapter17.spring.uiadapter17-spring-excel
+		 -->
+		 <dependency>
+		 	<groupId>com.nexacro.uiadapter17.spring</groupId>
+		 	<artifactId>uiadapter17-spring-core</artifactId>
+		 	<version>${nexacro.uiadapter.version}</version>
+		 </dependency>
+		 
+		 <dependency>
+		 	<groupId>com.nexacro.uiadapter17.spring</groupId>
+		 	<artifactId>uiadapter17-spring-dataaccess</artifactId>
+		 	<version>${nexacro.uiadapter.version}</version>
+		 </dependency>
+		 
+		 <dependency>
+		 	<groupId>com.nexacro.uiadapter17.spring</groupId>
+		 	<artifactId>uiadapter17-spring-excel</artifactId>
+		 	<version>${nexacro.uiadapter.version}</version>
+		 </dependency>
+
+	</dependencies>
+
+	<!-- 빌드 정보 설정 영역 -->
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+					</additionalBuildcommands>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>org.test.int1.Main</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
