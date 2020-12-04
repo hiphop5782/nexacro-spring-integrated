@@ -1,0 +1,29 @@
+﻿-P
+"C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\nexacro-spring-xproj.xprj"
+-O
+"C:\Users\zdlsz\OneDrive\문서\nexacro\17.1\outputs\nexacro-spring-xproj"
+-B
+"C:\Program Files (x86)\nexacro\17.1\nexacro17lib\"
+-FILE
+"'C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\environment.xml','C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\Application_Desktop.xadl','C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\Base\EmpList.xfdl','C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\FrameBase\Form_Left.xfdl','C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\FrameBase\Form_Top.xfdl','C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\FrameBase\Form_Work.xfdl','C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\_resource_\_theme_\default'"
+-BOOTSTRAP
+-MODULE
+-BROWSER
+NRE,Internet Explorer 11,Internet Explorer 10,Chrome,Safari,
+-D1
+"C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring\src\main\webapp\deploy\_windows_"
+-D2
+"C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring\src\main\webapp\deploy\_web_"
+-DB1
+"C:\Program Files (x86)\nexacro\17.1\nexacro17lib\"
+-DB2
+"C:\Program Files (x86)\nexacro\17.1\nexacro17lib\"
+-DT1
+4369
+-DT2
+4369
+-IGNORECOMPRESS
+"C:\Users\zdlsz\git\nexacro-spring-integrated\nexacro-spring-xproj\.ignorecompress"
+-RTL
+-Q
+67708

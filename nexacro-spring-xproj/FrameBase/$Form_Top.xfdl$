@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Top" width="1280" height="60" titletext="Form_Top">
+    <Layouts>
+      <Layout width="1280" height="60" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="Nexacro Spring 연동 예제" left="16" top="10" width="348" height="42" font="25px/normal &quot;Gulim&quot;"/>
+      </Layout>
+    </Layouts>
+  </Form>
+</FDL>

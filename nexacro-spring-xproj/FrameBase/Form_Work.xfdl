@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="1080" height="670" titletext="Form_Work">
+    <Layouts>
+      <Layout width="1080" height="670" screenid="Desktop_screen">
+        <Button id="Button00" taborder="0" text="목록" left="60" top="30" width="179" height="60" onclick="Button00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.go("Base::EmpList.xfdl");
+};
+]]></Script>
+  </Form>
+</FDL>

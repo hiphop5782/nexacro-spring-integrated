@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="EmpList" width="1280" height="720" titletext="New Form" onload="EmpList_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Static id="titleLabel" taborder="0" text="사원 조회" left="41" top="33" width="149" height="82" font="30px/normal &quot;Gulim&quot;"/>
+        <Grid id="displayGrid" taborder="1" left="40" top="194" width="1200" height="216" binddataset="dsEmp">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="150"/>
+                <Column size="200"/>
+                <Column size="240"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="empId"/>
+                <Cell col="1" text="empName"/>
+                <Cell col="2" text="salary"/>
+                <Cell col="3" text="hireDate"/>
+                <Cell col="4" text="phoneNumber"/>
+                <Cell col="5" text="email"/>
+                <Cell col="6" text="position"/>
+                <Cell col="7" text="dept"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:empId"/>
+                <Cell col="1" text="bind:empName"/>
+                <Cell col="2" text="bind:salary"/>
+                <Cell col="3" text="bind:hireDate" calendareditformat="bind:hireDate"/>
+                <Cell col="4" text="bind:phoneNumber"/>
+                <Cell col="5" text="bind:email"/>
+                <Cell col="6" text="bind:position"/>
+                <Cell col="7" text="bind:dept"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Edit id="keyword" taborder="2" left="245" top="115" width="555" height="54" font="30pt &quot;Arial&quot;"/>
+        <Button id="searchBtn" taborder="3" text="검색" left="825" top="114" width="110" height="57" onclick="Button00_onclick"/>
+        <Edit id="Edit00" taborder="4" left="120" top="490" width="220" height="50"/>
+        <Static id="Static00" taborder="5" text="empId" left="40" top="490" width="60" height="50"/>
+        <Static id="Static00_00" taborder="6" text="hireDate" left="470" top="490" width="60" height="50"/>
+        <Edit id="Edit00_00" taborder="7" left="550" top="490" width="220" height="50"/>
+        <Static id="Static00_01" taborder="8" text="empName" left="40" top="555" width="60" height="50"/>
+        <Edit id="Edit00_01" taborder="9" left="120" top="555" width="220" height="50"/>
+        <Static id="Static00_02" taborder="10" text="salary" left="41" top="615" width="60" height="50"/>
+        <Edit id="Edit00_02" taborder="11" left="121" top="615" width="220" height="50"/>
+        <Edit id="Edit00_00_00" taborder="12" left="550" top="550" width="220" height="50"/>
+        <Static id="Static00_00_00" taborder="13" text="phoneNumber" left="470" top="550" width="60" height="50"/>
+        <Edit id="Edit00_00_00_00" taborder="14" left="550" top="610" width="220" height="50"/>
+        <Static id="Static00_00_00_00" taborder="15" text="email" left="470" top="610" width="60" height="50"/>
+        <Edit id="Edit00_00_00_00_00" taborder="16" left="960" top="490" width="220" height="50"/>
+        <Static id="Static00_00_00_00_00" taborder="17" text="position" left="880" top="490" width="60" height="50"/>
+        <Edit id="Edit00_00_00_00_00_00" taborder="18" left="960" top="550" width="220" height="50"/>
+        <Static id="Static00_00_00_00_00_00" taborder="19" text="dept" left="880" top="550" width="60" height="50"/>
+        <Static id="titleLabel00" taborder="20" text="상세 정보" left="30" top="425" width="140" height="51" font="22px/normal &quot;Gulim&quot;"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsEmp">
+        <ColumnInfo>
+          <Column id="empId" type="INT" size="38"/>
+          <Column id="empName" type="STRING" size="21"/>
+          <Column id="salary" type="INT" size="38"/>
+          <Column id="hireDate" type="DATE" size="256"/>
+          <Column id="phoneNumber" type="STRING" size="11"/>
+          <Column id="email" type="STRING" size="50"/>
+          <Column id="position" type="STRING" size="30"/>
+          <Column id="dept" type="STRING" size="30"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.EmpList_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//시작 시 전체 목록을 조회하여 화면에 출력
+	var id = "emp_list";
+	var url = "http://localhost:8080/nexacrospring/nexacro/list";
+	var reqDs = "";
+	var resDs = "dsEmp=list";
+	var args = "";
+	var callback = "displayList";
+	
+	this.transaction(id, url, reqDs, resDs, args, callback);
+};
+
+this.displayList = function(id, code, message){
+	
+};
+
+this.searchBtn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//버튼을 누르면 검색하여 화면에 출력
+	//this.alert(this.keyword.value);
+	
+	var id="emp_search";
+	var url = "http://localhost:8080/nexacrospring/nexacro/search";
+	var reqDs = "";
+	var resDs = "dsEmp=list";
+	var args = "";
+	var callback = "displayList";
+	
+	this.transaction(id, url, reqDs, resDs, args, callback);
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="Edit00" propid="value" datasetid="dsEmp" columnid="empId"/>
+      <BindItem id="item1" compid="Edit00_01" propid="value" datasetid="dsEmp" columnid="empName"/>
+      <BindItem id="item2" compid="Edit00_02" propid="value" datasetid="dsEmp" columnid="salary"/>
+      <BindItem id="item3" compid="Edit00_00" propid="value" datasetid="dsEmp" columnid="hireDate"/>
+      <BindItem id="item4" compid="Edit00_00_00" propid="value" datasetid="dsEmp" columnid="phoneNumber"/>
+      <BindItem id="item5" compid="Edit00_00_00_00" propid="value" datasetid="dsEmp" columnid="email"/>
+      <BindItem id="item6" compid="Edit00_00_00_00_00" propid="value" datasetid="dsEmp" columnid="position"/>
+      <BindItem id="item7" compid="Edit00_00_00_00_00_00" propid="value" datasetid="dsEmp" columnid="dept"/>
+    </Bind>
+  </Form>
+</FDL>

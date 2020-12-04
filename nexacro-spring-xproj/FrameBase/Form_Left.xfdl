@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Left" width="200" height="670" titletext="Form_Left">
+    <Layouts>
+      <Layout width="200" height="670" screenid="Desktop_screen">
+        <ListBox id="ListBox00" taborder="0" left="25" top="36" width="148" height="434" onitemchanged="ListBox00_onitemchanged"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.ListBox00_onitemchanged = function(obj:nexacro.ListBox,e:nexacro.ItemChangeEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>
