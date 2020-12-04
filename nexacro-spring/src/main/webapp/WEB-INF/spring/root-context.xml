@@ -1,8 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	https://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 
+		데이터베이스 연결만 처리하는 도구 : 추가적으로 정보제공이 필요하다
+		- constructor-args : 생성자를 통한 정보 전달(필수)
+		- property : setter 메소드를 통한 정보 전달(선택)
+	-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="nexacro"></property>
+		<property name="password" value="nexacro"></property>
+	</bean>
+	
+	<!-- 
+		DBCP 방식의 연결을 수행하는 도구
+		- 기존 연결도구 정보 + 관리정보
+		- maxTotal : 관리할 총 연결의 개수
+		- maxIdle : 여유분으로 연결해둘 연결의 최대 개수
+		- minIdle : 여유분으로 연결해둘 연결의 최소 개수
+		- maxWaitMillis : 연결이 모자를 경우 최대 대기시간
+	 -->
+	<bean id="dbcpSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="nexacro"></property>
+		<property name="password" value="nexacro"></property>
 		
+		<property name="maxTotal" value="20"></property>
+		<property name="maxIdle" value="10"></property>
+		<property name="maxWaitMillis" value="3000"></property>
+	</bean>
+	
+	<!-- 
+		mybatis를 위해 필요한 도구를 등록
+		- SqlSessionFactory : 초기 설정 및 관리
+			- dataSource : 연결에 사용할 도구 정보
+			- configLocation : 설정파일의 위치 정보(classpath:/는 소스폴더(src)의 최상위 경로)
+			- mapperLocations : 매퍼 파일의 위치 정보들(패턴을 지정)
+		- SqlSession : 명령 실행
+			- factory의 정보를 반드시 알아야 함(설정,매퍼 정보등을 파악해야함)
+			- Spring에서 사용할 도구
+	-->
+	<bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dbcpSource"></property>
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"></property>
+		<property name="mapperLocations" value="classpath:/mybatis/mapper/*-mapper.xml"></property>
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="factory"></constructor-arg>
+	</bean>
+	
+	<!-- 
+		controller를 제외한 스캔
+	 -->
+	<context:component-scan base-package="com.hacademy.nexacrospring">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
 </beans>
