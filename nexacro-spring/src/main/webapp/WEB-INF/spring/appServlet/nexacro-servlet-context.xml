@@ -48,7 +48,7 @@
      	PlatformType#CONTENT_TYPE_SSV
      	PlatformType#CONTENT_TYPE_BIN
 	 -->
-	<beans:bean id="nexacroVIew" class="com.nexacro.uiadapter17.spring.core.view.NexacroView">
+	<beans:bean id="nexacroView" class="com.nexacro.uiadapter17.spring.core.view.NexacroView">
 		<beans:property name="defaultContentType" value="PlatformXml"></beans:property>
 		<beans:property name="defaultCharset" value="UTF-8"></beans:property>
 	</beans:bean>
